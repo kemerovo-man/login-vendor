@@ -68,3 +68,9 @@ class IsAdminMiddleware
     }
 }
 ```
+или использовать готовую: добавить в app\Http\Kernel.php
+```
+   protected $routeMiddleware = [
+          'isAdmin' => \KemerovoMan\LoginVendor\IsAdminMiddleware::class
+      ];
+```
