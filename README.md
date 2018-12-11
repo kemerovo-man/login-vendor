@@ -10,11 +10,19 @@
 ## Установка
 
 1. добавить в composer.json
+для Laravel 5.6
 ```
     "require": {
-        "KemerovoMan/LoginVendor": "dev-master"
+        "kemerovo-man/login-vendor": "0.0.*"
     },
 ```
+для Laravel 5.7
+```
+    "require": {
+        "kemerovo-man/login-vendor": "0.1.*"
+    }
+```
+
 2. добавить в app.conf
 ```
     'providers' => [
