@@ -15,6 +15,19 @@ class LoginMiddleware
         return null;
     }
 
+    private function ipCheck($ips)
+    {
+        foreach ($ips as $ip) {
+            if ($ip && ($ip == $_SERVER['REMOTE_ADDR']
+                    || (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $ip == $_SERVER['HTTP_X_FORWARDED_FOR'])
+                )
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function isRole($roleName)
     {
         if ($this->getCurrentRole() != $roleName) {
@@ -24,12 +37,7 @@ class LoginMiddleware
         if (!$ips) {
             return true;
         }
-        foreach ($ips as $ip) {
-            if ($ip && $ip == $_SERVER['REMOTE_ADDR']) {
-                return true;
-            }
-        }
-        return false;
+        return $this->ipCheck($ips);
     }
 }
 
