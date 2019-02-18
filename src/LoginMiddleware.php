@@ -20,7 +20,7 @@ class LoginMiddleware
         if (static::getCurrentRole() != $roleName) {
             return false;
         }
-        $ips = array_filter(config('login.roles' . $roleName . '.allowIps', []));
+        $ips = array_filter(config('login.roles.' . $roleName . '.allowIps', []));
         if (!$ips) {
             return true;
         }
