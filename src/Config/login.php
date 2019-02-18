@@ -3,9 +3,6 @@
 return [
 
     // 'loginView' => 'custom',
-    'adminIps' => [
-        env('LOGIN_ADMIN_IP')
-    ],
     'roles' => [
         'admin' => [
             'redirectTo' => env('LOGIN_ADMIN_REDIRECT_TO'),
@@ -14,7 +11,10 @@ return [
                     'login' => env('LOGIN_ADMIN_LOGIN'),
                     'password' => env('LOGIN_ADMIN_PASSWORD')
                 ]
-            ]
+            ],
+            'adminIps' => [
+                env('LOGIN_ADMIN_IP')
+            ],
         ],
     ]
 ];
