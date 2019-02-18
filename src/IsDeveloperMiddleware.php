@@ -9,7 +9,7 @@ class IsDeveloperMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (LoginMiddleware::isRole('developer')) {
+        if (app('login.vendor.middleware')->isRole('developer')) {
             return $next($request);
         }
         return redirect()

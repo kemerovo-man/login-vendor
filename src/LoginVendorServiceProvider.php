@@ -20,13 +20,18 @@ class LoginVendorServiceProvider extends ServiceProvider
         ]);
 
         App::register(\Collective\Html\HtmlServiceProvider::class);
-        
-        $this->app->bind('Form', function($app){
+
+        app()->bind('Form', function () {
             return new \Collective\Html\FormFacade();
         });
-        $this->app->bind('Html', function($app){
+        app()->bind('Html', function () {
             return new \Collective\Html\HtmlFacade();
         });
+        app()->bind(LoginMiddleware::class, function () {
+            return new LoginMiddleware();
+        });
+        app()->alias(LoginMiddleware::class,
+            'login.vendor.middleware');
     }
 
 }

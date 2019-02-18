@@ -9,7 +9,7 @@ class IsAdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (LoginMiddleware::isRole('admin')) {
+        if (app('login.vendor.middleware')->isRole('admin')) {
             return $next($request);
         }
         return redirect()

@@ -4,7 +4,7 @@ namespace KemerovoMan\LoginVendor;
 
 class LoginMiddleware
 {
-    public static function getCurrentRole()
+    private function getCurrentRole()
     {
         $roles = config('login.roles', []);
         foreach ($roles as $roleName => $roleInfo) {
@@ -15,9 +15,9 @@ class LoginMiddleware
         return null;
     }
 
-    public static function isRole($roleName)
+    public function isRole($roleName)
     {
-        if (static::getCurrentRole() != $roleName) {
+        if ($this->getCurrentRole() != $roleName) {
             return false;
         }
         $ips = array_filter(config('login.roles.' . $roleName . '.allowIps', []));
