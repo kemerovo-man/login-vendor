@@ -5,11 +5,11 @@ namespace KemerovoMan\LoginVendor;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdminMiddleware
+class IsDeveloperMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (LoginMiddleware::isRole('admin')) {
+        if (LoginMiddleware::isRole('developer')) {
             return $next($request);
         }
         return redirect()
