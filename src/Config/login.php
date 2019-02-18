@@ -12,7 +12,7 @@ return [
                     'password' => env('LOGIN_ADMIN_PASSWORD')
                 ]
             ],
-            'adminIps' => [
+            'allowIps' => [
                 env('LOGIN_ADMIN_IP')
             ],
         ],

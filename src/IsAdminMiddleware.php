@@ -22,12 +22,12 @@ class IsAdminMiddleware
     {
         $roleName = $this->getRole();
         if ($roleName) {
-            $ips = config('login.roles' . $roleName . '.adminIps', []);
+            $ips = config('login.roles' . $roleName . '.allowIps', []);
             if (!$ips) {
                 return $next($request);
             }
             foreach ($ips as $ip) {
-                if ($ip == $_SERVER['REMOTE_ADDR']) {
+                if ($ip && $ip == $_SERVER['REMOTE_ADDR']) {
                     return $next($request);
                 }
             }
