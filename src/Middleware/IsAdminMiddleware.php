@@ -1,15 +1,16 @@
 <?php
 
-namespace KemerovoMan\LoginVendor;
+namespace KemerovoMan\LoginVendor\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use KemerovoMan\LoginVendor\Facade\LoginVendorService;
 
 class IsAdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (app('login.vendor.middleware')->isRole('admin')) {
+        if (LoginVendorService::instance()->isRole('admin')) {
             return $next($request);
         }
         return redirect()

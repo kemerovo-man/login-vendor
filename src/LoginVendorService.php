@@ -2,10 +2,7 @@
 
 namespace KemerovoMan\LoginVendor;
 
-use Closure;
-use Illuminate\Http\Request;
-
-class LoginMiddleware
+class LoginVendorService
 {
     public function getCurrentRole()
     {
@@ -18,7 +15,7 @@ class LoginMiddleware
         return null;
     }
 
-    private function ipCheck($ips)
+    public function ipCheck($ips)
     {
         foreach ($ips as $ip) {
             if ($ip && $ip == $_SERVER['REMOTE_ADDR']) {
@@ -38,15 +35,6 @@ class LoginMiddleware
             return true;
         }
         return $this->ipCheck($ips);
-    }
-
-    public function handle(Request $request, Closure $next)
-    {
-        if ($this->getCurrentRole()) {
-            return $next($request);
-        }
-        return redirect()
-            ->action('\KemerovoMan\LoginVendor\LoginController@index', ['redirect_to' => $request->fullUrl()]);
     }
 }
 

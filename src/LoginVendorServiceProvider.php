@@ -27,11 +27,11 @@ class LoginVendorServiceProvider extends ServiceProvider
         app()->bind('Html', function () {
             return new \Collective\Html\HtmlFacade();
         });
-        app()->bind(LoginMiddleware::class, function () {
-            return new LoginMiddleware();
+        app()->bind(LoginVendorService::class, function () {
+            return new LoginVendorService();
         });
-        app()->alias(LoginMiddleware::class,
-            'login.vendor.middleware');
+        app()->alias(LoginVendorService::class,
+            'login.vendor.service');
     }
 
 }
