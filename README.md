@@ -14,7 +14,7 @@
 для Laravel 5.7
 ```
     "require": {
-        "kemerovo-man/login-vendor": "0.1.*"
+        "kemerovo-man/login-vendor": "5.7.*"
     }
 ```
 
@@ -74,6 +74,6 @@ class IsAdminMiddleware
 или использовать готовую: добавить в app\Http\Kernel.php
 ```
    protected $routeMiddleware = [
-          'isAdmin' => \KemerovoMan\LoginVendor\IsAdminMiddleware::class
+          'isAdmin' => \KemerovoMan\LoginVendor\Middleware\IsAdminMiddleware::class
       ];
 ```
