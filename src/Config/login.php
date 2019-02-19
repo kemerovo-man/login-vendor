@@ -3,6 +3,7 @@
 return [
 
     // 'loginView' => 'custom',
+    'log' => true,
     'roles' => [
         'admin' => [
             'redirectTo' => env('LOGIN_ADMIN_REDIRECT_TO'),

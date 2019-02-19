@@ -2,9 +2,12 @@
 
 namespace KemerovoMan\LoginVendor;
 
+use Closure;
+use Illuminate\Http\Request;
+
 class LoginMiddleware
 {
-    private function getCurrentRole()
+    public function getCurrentRole()
     {
         $roles = config('login.roles', []);
         foreach ($roles as $roleName => $roleInfo) {
@@ -18,10 +21,7 @@ class LoginMiddleware
     private function ipCheck($ips)
     {
         foreach ($ips as $ip) {
-            if ($ip && ($ip == $_SERVER['REMOTE_ADDR']
-                    || (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $ip == $_SERVER['HTTP_X_FORWARDED_FOR'])
-                )
-            ) {
+            if ($ip && $ip == $_SERVER['REMOTE_ADDR']) {
                 return true;
             }
         }
@@ -38,6 +38,15 @@ class LoginMiddleware
             return true;
         }
         return $this->ipCheck($ips);
+    }
+
+    public function handle(Request $request, Closure $next)
+    {
+        if ($this->getCurrentRole()) {
+            return $next($request);
+        }
+        return redirect()
+            ->action('\KemerovoMan\LoginVendor\LoginController@index', ['redirect_to' => $request->fullUrl()]);
     }
 }
 

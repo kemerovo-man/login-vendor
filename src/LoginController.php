@@ -1,6 +1,8 @@
 <?php
+
 namespace KemerovoMan\LoginVendor;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 use Illuminate\Routing\Controller;
@@ -25,11 +27,23 @@ class LoginController extends Controller
         $login = Input::get('login');
         $password = Input::get('password');
         $redirectTo = Input::get('redirect_to');
+        $now = Carbon::now();
+        if (file_exists(storage_path('last_login_timestamp'))) {
+            $lastAttempt = file_get_contents(storage_path('last_login_timestamp'));
+            if ($lastAttempt) {
+                $lastAttempt = Carbon::createFromTimestamp($lastAttempt);
+                if ($lastAttempt->diffInSeconds($now) < 10) {
+                    return redirect()->back()
+                        ->withErrors(['message' => 'Попробуйте еще раз через 10 сек']);
+                }
+            }
+        }
         if (!$login || !$password) {
             return redirect()->back()
                 ->withErrors(['message' => 'Не заполнены поля']);
         }
         $roles = config('login.roles', []);
+
         foreach ($roles as $roleName => $roleInfo) {
             $credentials = isset($roleInfo['credentials']) ? $roleInfo['credentials'] : [];
             foreach ($credentials as $cred) {
@@ -40,6 +54,10 @@ class LoginController extends Controller
                 ) {
                     session()->put('loginVendorRole', $roleName);
                     session()->save();
+                    if (config('login.log', true)) {
+                        file_put_contents(storage_path('login.log'), $now->toDateTimeString() . ' ' . $login . "\n", FILE_APPEND);
+                    }
+                    file_put_contents(storage_path('last_login_timestamp'), $now->timestamp);
                     if ($redirectTo) {
                         return redirect()
                             ->to($redirectTo);
@@ -49,6 +67,9 @@ class LoginController extends Controller
                 }
 
             }
+        }
+        if (config('login.log', true)) {
+            file_put_contents(storage_path('login_failed.log'), $now . ' ' . $login . "\n", FILE_APPEND);
         }
         return redirect()->back()
             ->withErrors(['message' => 'Не верные логин пароль']);
