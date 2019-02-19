@@ -38,6 +38,8 @@ class LoginController extends Controller
                 }
             }
         }
+        file_put_contents(storage_path('last_login_timestamp'), $now->timestamp);
+
         if (!$login || !$password) {
             return redirect()->back()
                 ->withErrors(['message' => 'Не заполнены поля']);
@@ -57,7 +59,6 @@ class LoginController extends Controller
                     if (config('login.log', true)) {
                         file_put_contents(storage_path('login.log'), $now->toDateTimeString() . ' ' . $login . "\n", FILE_APPEND);
                     }
-                    file_put_contents(storage_path('last_login_timestamp'), $now->timestamp);
                     if ($redirectTo) {
                         return redirect()
                             ->to($redirectTo);
