@@ -13,9 +13,9 @@ class LoginVendorService extends Facade
     {
         return parent::getFacadeRoot();
     }
-    
+
     protected static function getFacadeAccessor()
     {
-        return 'login.vendor.service';
+        return \KemerovoMan\LoginVendor\LoginVendorService::class;
     }
 }

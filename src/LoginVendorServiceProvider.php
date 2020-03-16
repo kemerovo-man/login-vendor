@@ -30,8 +30,6 @@ class LoginVendorServiceProvider extends ServiceProvider
         app()->bind(LoginVendorService::class, function () {
             return new LoginVendorService();
         });
-        app()->alias(LoginVendorService::class,
-            'login.vendor.service');
     }
 
 }

@@ -19,8 +19,7 @@
 <div class="container">
     <div class="row" style="margin-top: 100px;">
         <div class="col-sm-8 col-sm-offset-2">
-            {!! Form::open(['method' => 'POST', 'url' => '/login', 'class'=>'form-horizontal'])!!}
-            <form action="/login" method="POST" class="form-horizontal">
+            {!! Form::open(['method' => 'POST', 'url' => '/' . config('login.loginRoute', 'login'), 'class'=>'form-horizontal'])!!}
             @if(isset($errors))
                 @foreach($errors->all() as $error)
                     <div class="col-sm-offset-2 col-sm-10">

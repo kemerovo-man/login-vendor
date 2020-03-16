@@ -3,6 +3,8 @@
 return [
 
     // 'loginView' => 'custom',
+    'loginRoute' => 'login',
+    'logoutRoute' => 'logout',
     'log' => true,
     'roles' => [
         'admin' => [

@@ -3,15 +3,15 @@
 namespace KemerovoMan\LoginVendor;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Routing\Controller;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $redirectTo = Input::get('redirect_to');
+        $redirectTo = $request->redirect_to;
         $view = config('login.loginView');
         if ($view) {
             return View::make($view);
@@ -22,11 +22,11 @@ class LoginController extends Controller
         }
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        $login = Input::get('login');
-        $password = Input::get('password');
-        $redirectTo = Input::get('redirect_to');
+        $login = $request->login;
+        $password = $request->password;
+        $redirectTo = $request->redirect_to;
         $now = Carbon::now();
         if (file_exists(storage_path('last_login_timestamp'))) {
             $lastAttempt = file_get_contents(storage_path('last_login_timestamp'));
